@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Local database files
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# macOS files
+.DS_Store
