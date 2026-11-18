@@ -40,4 +40,49 @@ function getAllTasks() {
 
 
 // Export the function so other files can use it
-module.exports = { addTask, getAllTasks };
+
+// Update an existing task
+function updateTask(taskId, title, description, dueDate, duration, importance, status) {
+  return new Promise((resolve, reject) => {
+    const sql = `
+      UPDATE tasks
+      SET title = ?,
+          description = ?,
+          due_date = ?,
+          duration = ?,
+          importance = ?,
+          status = ?
+      WHERE task_id = ?
+    `;
+
+    db.run(
+      sql,
+      [title, description, dueDate, duration, importance, status, taskId],
+      function (err) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(this.changes);
+        }
+      }
+    );
+  });
+}
+
+
+// Delete a task by its ID
+function deleteTask(taskId) {
+  return new Promise((resolve, reject) => {
+    const sql = "DELETE FROM tasks WHERE task_id = ?";
+
+    db.run(sql, [taskId], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(this.changes);
+      }
+    });
+  });
+}
+
+module.exports = { addTask, getAllTasks, updateTask, deleteTask };
