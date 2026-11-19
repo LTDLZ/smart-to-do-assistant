@@ -1,22 +1,62 @@
 import db from '../db/index.js';
 
 const INSERT_SQL = `
-  INSERT INTO tasks (task_id, title, description, due_date, duration, importance, urgency, status)
-  VALUES (@task_id, @title, @description, @due_date, @duration, @importance, @urgency, @status)
+  INSERT INTO tasks (task_id, title, description, due_date, duration, importance, status)
+  VALUES (@task_id, @title, @description, @due_date, @duration, @importance, @status)
 `;
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/** Local midnight, so "today" is the server's calendar day rather than UTC. */
+function startOfToday() {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+}
+
 /**
- * Return every task, most urgent work first.
- * `due_date` is stored as text (ISO `YYYY-MM-DD`), so a plain sort works.
+ * Urgency from 1 (not urgent) to 5 (overdue or due today), derived from the
+ * due date. Buckets keep the value stable and easy to explain.
+ */
+export function urgencyFor(dueDate, today = startOfToday()) {
+  if (!dueDate) return 1;
+
+  const due = new Date(`${dueDate}T00:00:00`);
+  if (Number.isNaN(due.getTime())) return 1;
+
+  const days = Math.round((due - today) / DAY_MS);
+  if (days <= 0) return 5;
+  if (days <= 2) return 4;
+  if (days <= 5) return 3;
+  if (days <= 10) return 2;
+  return 1;
+}
+
+function compareTasks(a, b) {
+  if (b.urgency !== a.urgency) return b.urgency - a.urgency;
+  if (a.due_date !== b.due_date) {
+    if (a.due_date === null) return 1;
+    if (b.due_date === null) return -1;
+    return a.due_date < b.due_date ? -1 : 1;
+  }
+  if (b.importance !== a.importance) return b.importance - a.importance;
+  return a.task_id - b.task_id;
+}
+
+/**
+ * Return every task, most urgent first. Urgency is computed from `due_date`
+ * on each request, so it changes as tasks come due.
  */
 export function listTasks() {
+  const today = startOfToday();
+
   return db
     .prepare(
-      `SELECT task_id, title, description, due_date, duration, importance, urgency, status
-       FROM tasks
-       ORDER BY due_date IS NULL, due_date ASC, importance DESC, task_id ASC`,
+      `SELECT task_id, title, description, due_date, duration, importance, status
+       FROM tasks`,
     )
-    .all();
+    .all()
+    .map((row) => ({ ...row, urgency: urgencyFor(row.due_date, today) }))
+    .sort(compareTasks);
 }
 
 export function countTasks() {

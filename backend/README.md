@@ -54,7 +54,9 @@ backend/
 
 ### GET /api/tasks
 
-All tasks, soonest due date first. Tasks without a due date come last.
+All tasks, most urgent first. `urgency` is computed from `due_date` on every
+request: 5 means overdue or due today, 1 means 11+ days out or no due date.
+Ties break by due date, then importance.
 
 ```bash
 curl.exe "http://localhost:3000/api/tasks"
@@ -69,7 +71,7 @@ curl.exe "http://localhost:3000/api/tasks"
     "due_date": "2026-11-20",
     "duration": 90,
     "importance": 5,
-    "urgency": 5,
+    "urgency": 4,
     "status": "Pending"
   }
 ]
@@ -110,7 +112,6 @@ CREATE TABLE IF NOT EXISTS tasks (
     due_date TEXT,
     duration INTEGER,
     importance INTEGER NOT NULL DEFAULT 3 CHECK (importance BETWEEN 1 AND 5),
-    urgency INTEGER,
     status TEXT NOT NULL DEFAULT 'Pending'
         CHECK (status IN ('Pending', 'In Progress', 'Completed'))
 );
@@ -123,11 +124,11 @@ The file is `data/tasks.db`. To reset it, stop the server and delete
 
 Header row required. `title` is required. `importance` is 1-5 (default 3).
 `status` is `Pending`, `In Progress` or `Completed` (default `Pending`). Blank
-cells become `NULL`.
+cells become `NULL`. Urgency is not in the CSV; it is calculated by the API.
 
 ```
-task_id,title,description,due_date,duration,importance,urgency,status
-1,Submit ITEC 4020 project proposal,"Upload the proposal spreadsheet to the shared drive, then notify the team",2026-11-20,90,5,5,Pending
+task_id,title,description,due_date,duration,importance,status
+1,Submit ITEC 4020 project proposal,"Upload the proposal spreadsheet to the shared drive, then notify the team",2026-11-20,90,5,Pending
 ```
 
 ## Config

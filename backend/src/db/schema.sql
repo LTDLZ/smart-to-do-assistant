@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS tasks (
     duration INTEGER,
     importance INTEGER NOT NULL DEFAULT 3
         CHECK (importance BETWEEN 1 AND 5),
-    urgency INTEGER,
     status TEXT NOT NULL DEFAULT 'Pending'
         CHECK (status IN ('Pending', 'In Progress', 'Completed'))
 );

@@ -7,7 +7,6 @@ export const TASK_COLUMNS = [
   'due_date',
   'duration',
   'importance',
-  'urgency',
   'status',
 ];
 
@@ -60,7 +59,6 @@ export function normalizeTask(record, rowNumber) {
     due_date: text(record.due_date),
     duration: integer(record.duration, 'duration', rowNumber),
     importance,
-    urgency: integer(record.urgency, 'urgency', rowNumber),
     status,
   };
 }
