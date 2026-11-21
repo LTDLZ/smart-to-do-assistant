@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Tasks | Smart To-Do Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="page-width">
+      <section id="tasks-page" aria-labelledby="tasks-heading">
+        <div class="task-list-heading">
+          <h1 id="tasks-heading">Tasks</h1>
+          <button class="task-action" id="refresh-tasks" type="button" disabled>Refresh</button>
+        </div>
+        <div class="status-filters" role="group" aria-label="Filter tasks by status">
+          <button type="button" data-status-filter="Pending" aria-pressed="true" aria-controls="task-list">Pending <span>(0)</span></button>
+          <button type="button" data-status-filter="In Progress" aria-pressed="true" aria-controls="task-list">In Progress <span>(0)</span></button>
+          <button type="button" data-status-filter="Completed" aria-pressed="true" aria-controls="task-list">Completed <span>(0)</span></button>
+        </div>
+        <p class="task-message" id="task-message" role="status">Loading tasks…</p>
+        <button class="task-action task-retry" id="retry-tasks" type="button" hidden>Retry</button>
+        <div class="task-list" id="task-list" aria-busy="true"></div>
+        <noscript>Enable JavaScript to view the task list.</noscript>
+      </section>
+
+      <section id="overview-page" aria-labelledby="overview-heading" hidden>
+        <h1 id="overview-heading">Overview</h1>
+        <div class="overview-placeholder">
+          <h2>Task charts</h2>
+          <p>Charts for task status, estimated time, and priorities will appear here.</p>
+        </div>
+      </section>
+
+      <template id="task-card-template">
+        <article class="task-card">
+          <header class="task-heading">
+            <span class="urgency-dot"></span>
+            <h2 class="task-title" data-field="title"></h2>
+            <button class="status-action quick-status-action" type="button" disabled></button>
+            <button class="task-toggle" type="button" aria-expanded="false"></button>
+          </header>
+          <div class="task-body" hidden>
+            <div class="task-overview">
+              <span class="task-status" data-field="status"></span>
+              <p class="task-description" data-field="description"></p>
+            </div>
+            <dl class="task-details">
+              <div>
+                <dt>Due date</dt>
+                <dd data-field="due"></dd>
+              </div>
+              <div>
+                <dt>Estimated time</dt>
+                <dd data-field="duration"></dd>
+              </div>
+              <div>
+                <dt>Urgency</dt>
+                <dd class="task-rating" data-field="urgency"></dd>
+              </div>
+              <div>
+                <dt>Importance</dt>
+                <dd class="task-rating" data-field="importance"></dd>
+              </div>
+            </dl>
+            <footer class="task-footer">
+              <span>Status actions coming soon.</span>
+              <button class="status-action" type="button" disabled></button>
+            </footer>
+          </div>
+        </article>
+      </template>
+    </main>
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <div class="page-width bottom-nav-links">
+        <a href="#tasks" aria-current="page">Tasks</a>
+        <a href="#overview">Overview</a>
+      </div>
+    </nav>
+    <script src="taskApi.js" defer></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>

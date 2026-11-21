@@ -1,0 +1,345 @@
+:root {
+  --page-background: #f2f5fa;
+  color-scheme: light;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  color: #18263b;
+  background: var(--page-background);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.page-width {
+  width: min(100% - 2rem, 42rem);
+  margin-inline: auto;
+}
+
+main {
+  padding-top: calc(clamp(1.25rem, 5vw, 2.5rem) + env(safe-area-inset-top));
+  padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  line-height: 1.2;
+}
+
+.task-list-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.task-action {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #b5c6de;
+  border-radius: 0.65rem;
+  color: #184275;
+  background: #fff;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.task-action:focus-visible {
+  outline: 2px solid #245aae;
+  outline-offset: 2px;
+}
+
+.task-action:disabled {
+  color: #495a70;
+  background: #e4eaf3;
+  cursor: wait;
+}
+
+.status-filters {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.25fr 1.1fr;
+  gap: 0.375rem;
+  margin-bottom: 0.5rem;
+  padding-block: calc(0.5rem + env(safe-area-inset-top)) 0.5rem;
+  background: var(--page-background);
+}
+
+.status-filters button {
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 0.375rem 0.25rem;
+  border: 1px solid #b5c6de;
+  border-radius: 0.65rem;
+  color: #344963;
+  background: #fff;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 650;
+  line-height: 1.25;
+  cursor: pointer;
+}
+
+.status-filters button[aria-pressed="true"] {
+  border-color: #245aae;
+  color: #fff;
+  background: #245aae;
+}
+
+.status-filters button span {
+  font-variant-numeric: tabular-nums;
+}
+
+.status-filters button:focus-visible,
+.bottom-nav a:focus-visible {
+  outline: 2px solid #245aae;
+  outline-offset: 2px;
+}
+
+.task-message {
+  margin: 0;
+  color: #495a70;
+}
+
+.task-retry {
+  margin-top: 0.75rem;
+}
+
+.task-list {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.task-card {
+  border: 1px solid #d4deeb;
+  border-radius: 1.4rem;
+  background: #fff;
+  box-shadow: 0 4px 12px #172d490a;
+}
+
+.task-card.is-expanded {
+  border-color: #9cade0;
+  border-radius: 1rem;
+}
+
+.task-heading {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 3.75rem 2.75rem;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 3.5rem;
+  padding: 0.375rem 0.5rem 0.375rem clamp(0.875rem, 4vw, 1.5rem);
+}
+
+.is-expanded .task-heading {
+  grid-template-columns: auto minmax(0, 1fr) 2.75rem;
+}
+
+.task-title {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.is-expanded .task-title {
+  font-size: 1.25rem;
+}
+
+.urgency-dot {
+  width: 0.75rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--level-color, #7b8595);
+}
+
+.task-toggle {
+  display: grid;
+  min-height: 2.75rem;
+  place-items: center;
+  border: 0;
+  border-radius: 0.65rem;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
+.task-toggle:focus-visible {
+  outline: 2px solid #245aae;
+  outline-offset: 2px;
+}
+
+.task-toggle::after {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.is-expanded .task-toggle::after {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.status-action {
+  min-height: 2rem;
+  padding: 0.25rem 0.375rem;
+  border: 1px solid #d4deeb;
+  border-radius: 0.5rem;
+  color: #595f6c;
+  background: #f0f3f8;
+  font: 650 0.875rem/1.2 system-ui, sans-serif;
+}
+
+.task-body {
+  padding: 0 clamp(1rem, 4vw, 1.5rem) clamp(1rem, 4vw, 1.5rem);
+}
+
+.task-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e0e6ef;
+  color: #495a70;
+  font-size: 0.875rem;
+}
+
+.task-footer .status-action {
+  min-width: 4rem;
+  min-height: 2.75rem;
+}
+
+.task-status {
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  border-radius: 1rem;
+  color: #184275;
+  background: #e4efff;
+  font-size: 0.875rem;
+  font-weight: 650;
+}
+
+.task-description {
+  margin: 0.625rem 0 0;
+  overflow-wrap: anywhere;
+  color: #495a70;
+}
+
+.task-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.875rem;
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e6ef;
+}
+
+.task-details dt {
+  color: #495a70;
+  font-size: 0.875rem;
+}
+
+.task-details dd {
+  margin: 0.125rem 0 0;
+  font-weight: 650;
+}
+
+.task-rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.rating-segments {
+  display: inline-grid;
+  grid-template-columns: repeat(5, 0.75rem);
+  gap: 0.175rem;
+}
+
+.rating-segments > span {
+  height: 0.625rem;
+  border-radius: 0.175rem;
+  background: #dce3ec;
+}
+
+.rating-segments > .filled {
+  background: var(--level-color);
+}
+
+[data-level="1"] { --level-color: #188154; }
+[data-level="2"] { --level-color: #598126; }
+[data-level="3"] { --level-color: #a47108; }
+[data-level="4"] { --level-color: #c4531a; }
+[data-level="5"] { --level-color: #bd303b; }
+
+.bottom-nav {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 2;
+  padding-block: 0.5rem calc(0.5rem + env(safe-area-inset-bottom));
+  border-top: 1px solid #d4deeb;
+  background: #fff;
+}
+
+.bottom-nav-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.bottom-nav a {
+  display: grid;
+  min-height: 2.75rem;
+  place-items: center;
+  border-radius: 0.65rem;
+  color: #495a70;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.bottom-nav a[aria-current="page"] {
+  color: #184275;
+  background: #e4efff;
+}
+
+.overview-placeholder {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  border: 1px solid #d4deeb;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.overview-placeholder h2 {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.overview-placeholder p {
+  margin: 0.375rem 0 0;
+  color: #495a70;
+}
+
+@media (min-width: 40rem) {
+  .task-details {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
