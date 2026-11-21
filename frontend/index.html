@@ -13,32 +13,44 @@
 
     <main class="page-width">
       <h1>Tasks</h1>
-      <article class="task-card" aria-labelledby="task-title">
-        <header class="task-heading">
-          <h2 id="task-title">Buy groceries</h2>
-          <span class="task-status">In Progress</span>
-        </header>
-        <p class="task-description">Weekly grocery run for the apartment</p>
+      <div class="task-list" id="task-list"></div>
+      <noscript>Enable JavaScript to view the task list.</noscript>
 
-        <dl class="task-details">
-          <div>
-            <dt>Due date</dt>
-            <dd><time datetime="2026-11-18">Nov 18, 2026</time></dd>
+      <template id="task-card-template">
+        <details class="task-card" name="tasks">
+          <summary class="task-heading">
+            <span class="task-title" data-field="title"></span>
+            <span class="urgency-dot"></span>
+            <span class="task-toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="task-body">
+            <div class="task-overview">
+              <span class="task-status" data-field="status"></span>
+              <p class="task-description" data-field="description"></p>
+            </div>
+            <dl class="task-details">
+              <div>
+                <dt>Due date</dt>
+                <dd data-field="due"></dd>
+              </div>
+              <div>
+                <dt>Estimated time</dt>
+                <dd data-field="duration"></dd>
+              </div>
+              <div>
+                <dt>Urgency</dt>
+                <dd class="task-rating" data-field="urgency"></dd>
+              </div>
+              <div>
+                <dt>Importance</dt>
+                <dd class="task-rating" data-field="importance"></dd>
+              </div>
+            </dl>
           </div>
-          <div>
-            <dt>Estimated time</dt>
-            <dd>60 min</dd>
-          </div>
-          <div>
-            <dt>Urgency</dt>
-            <dd>5 / 5</dd>
-          </div>
-          <div>
-            <dt>Importance</dt>
-            <dd>2 / 5</dd>
-          </div>
-        </dl>
-      </article>
+        </details>
+      </template>
     </main>
+    <script src="taskApi.js" defer></script>
+    <script src="app.js" defer></script>
   </body>
 </html>
