@@ -7,7 +7,7 @@ async function test() {
     const taskId = await addTask(
       "Finish ITEC 4020 assignment",
       "Complete the database part",
-      "2026-11-17T23:59",
+      "2026-11-17",
       120,
       5
     );

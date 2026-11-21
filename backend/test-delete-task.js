@@ -11,7 +11,7 @@ async function test() {
     const taskId = await addTask(
       "Temporary test task",
       "This task will be deleted",
-      "2026-12-08T12:00",
+      "2026-12-08",
       10,
       3
     );

@@ -7,7 +7,7 @@ async function test() {
       1,
       "Finish ITEC 4020 project",
       "Complete and test the database functions",
-      "2026-12-08T23:59",
+      "2026-12-08",
       90,
       5,
       "In Progress"
