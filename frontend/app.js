@@ -1,5 +1,8 @@
 const taskList = document.querySelector("#task-list");
 const cardTemplate = document.querySelector("#task-card-template");
+const taskMessage = document.querySelector("#task-message");
+const refreshButton = document.querySelector("#refresh-tasks");
+const retryButton = document.querySelector("#retry-tasks");
 const dateFormat = new Intl.DateTimeFormat("en-CA", {
   month: "short",
   day: "numeric",
@@ -63,9 +66,34 @@ function renderTask(task, open) {
   return card;
 }
 
-async function renderTasks() {
-  const tasks = [...await getTasks()].sort(comparePriority);
-  taskList.replaceChildren(...tasks.map((task, index) => renderTask(task, index === 0)));
+async function loadTasks() {
+  refreshButton.disabled = true;
+  retryButton.hidden = true;
+  taskList.setAttribute("aria-busy", "true");
+  taskList.replaceChildren();
+  taskMessage.textContent = "Loading tasks…";
+
+  try {
+    const tasks = await getTasks();
+    if (!Array.isArray(tasks)) throw new TypeError("Expected a task array");
+
+    const sorted = [...tasks].sort(comparePriority);
+    taskList.replaceChildren(...sorted.map((task, index) => renderTask(task, index === 0)));
+    taskMessage.textContent = sorted.length === 0 ? "No tasks yet." : "";
+  } catch {
+    taskMessage.textContent = "Couldn’t load tasks.";
+    retryButton.hidden = false;
+  } finally {
+    taskList.setAttribute("aria-busy", "false");
+    refreshButton.disabled = false;
+  }
 }
 
-renderTasks();
+refreshButton.addEventListener("click", loadTasks);
+retryButton.addEventListener("click", async () => {
+  await loadTasks();
+  if (document.activeElement === document.body) {
+    (retryButton.hidden ? refreshButton : retryButton).focus();
+  }
+});
+loadTasks();

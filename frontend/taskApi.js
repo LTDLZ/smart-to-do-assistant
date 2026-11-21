@@ -11,5 +11,7 @@ const sampleTasks = [
 ];
 
 async function getTasks() {
+  // Simulate a short request so the loading state is visible in the local preview.
+  await new Promise((resolve) => setTimeout(resolve, 350));
   return sampleTasks;
 }

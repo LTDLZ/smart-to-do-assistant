@@ -12,8 +12,13 @@
     </header>
 
     <main class="page-width">
-      <h1>Tasks</h1>
-      <div class="task-list" id="task-list"></div>
+      <div class="task-list-heading">
+        <h1>Tasks</h1>
+        <button class="task-action" id="refresh-tasks" type="button" disabled>Refresh</button>
+      </div>
+      <p class="task-message" id="task-message" role="status">Loading tasks…</p>
+      <button class="task-action task-retry" id="retry-tasks" type="button" hidden>Retry</button>
+      <div class="task-list" id="task-list" aria-busy="true"></div>
       <noscript>Enable JavaScript to view the task list.</noscript>
 
       <template id="task-card-template">

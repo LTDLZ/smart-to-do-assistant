@@ -31,9 +31,50 @@ main {
 }
 
 h1 {
-  margin: 0 0 1rem;
+  margin: 0;
   font-size: clamp(1.75rem, 5vw, 2.25rem);
   line-height: 1.2;
+}
+
+.task-list-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.task-action {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #b5c6de;
+  border-radius: 0.65rem;
+  color: #184275;
+  background: #fff;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.task-action:focus-visible {
+  outline: 2px solid #245aae;
+  outline-offset: 2px;
+}
+
+.task-action:disabled {
+  color: #495a70;
+  background: #e4eaf3;
+  cursor: wait;
+}
+
+.task-message {
+  margin: 0;
+  color: #495a70;
+}
+
+.task-retry {
+  margin-top: 0.75rem;
 }
 
 .task-list {
