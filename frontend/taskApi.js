@@ -11,7 +11,15 @@ const sampleTasks = [
 ];
 
 async function getTasks() {
-  // Simulate a short request so the loading state is visible in the local preview.
-  await new Promise((resolve) => setTimeout(resolve, 350));
-  return sampleTasks;
+  // Keep the standalone preview available when index.html is opened from disk.
+  if (window.location.protocol === "file:") {
+    await new Promise((resolve) => setTimeout(resolve, 350));
+    return sampleTasks;
+  }
+
+  const response = await fetch("/api/tasks", { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`Task request failed with HTTP ${response.status}`);
+  }
+  return response.json();
 }
