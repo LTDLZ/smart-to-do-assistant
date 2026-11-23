@@ -1,0 +1,9 @@
+task_id,title,description,due_date,duration,importance,status
+1,Submit ITEC 4020 project proposal,"Upload the proposal spreadsheet to the shared drive, then notify the team",2026-11-20,90,5,Pending
+2,Review team pull requests,Check the dev/elina and dev/songang branches,2026-11-19,45,3,Pending
+3,Buy groceries,Weekly grocery run for the apartment,2026-11-18,60,2,In Progress
+4,Prepare demo script,Outline the live demo flow for integration/demo-1,2026-11-25,120,4,Pending
+5,Book dentist appointment,Call the clinic to schedule a cleaning,2026-12-01,15,3,Pending
+6,Write API tests,Add coverage for GET /api/tasks,2026-11-22,150,4,Pending
+7,Read SQLite documentation,Skim the better-sqlite3 query guide,2026-11-21,30,2,Completed
+8,Plan sprint retro,Schedule a 30 minute meeting with the team,2026-11-26,40,3,Pending

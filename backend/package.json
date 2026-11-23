@@ -1,0 +1,20 @@
+{
+  "name": "smart-to-do-assistant-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Express + SQLite REST API for the Smart To-Do Assistant",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=22.9.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "dev": "node --watch --env-file-if-exists=.env src/server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.2.0",
+    "csv-parse": "^7.0.3",
+    "express": "^5.3.0"
+  }
+}
