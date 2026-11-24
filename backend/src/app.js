@@ -1,5 +1,9 @@
 import express from 'express';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import routes from './routes/index.js';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const frontendDir = path.resolve(__dirname, '../../frontend');
 
 export function createApp() {
   const app = express();
@@ -13,7 +17,9 @@ export function createApp() {
 
   app.use('/api', routes);
 
-  // Unknown route
+app.use(express.static(frontendDir));
+
+// Unknown route
   app.use((req, res) => {
     res.status(404).json({ error: `Route not found: ${req.method} ${req.originalUrl}` });
   });
